@@ -1,0 +1,514 @@
+/* 
+ * Styles.css
+ * Custom styles for Sistem Pengelolaan dan Rekomendasi Kegiatan Ekstrakurikuler
+ * MA Modern Miftahussa'adah Cimahi
+ */
+
+ :root {
+     --primary-color: #007bff;
+     --secondary-color: #6c757d;
+     --success-color: #198754;
+     --danger-color: #dc3545;
+     --warning-color: #ffc107;
+     --info-color: #0dcaf0;
+     --dark-color: #212529;
+     --light-color: #f8f9fa;
+ }
+ 
+ /* General Styles */
+ body {
+     font-family: 'Nunito', sans-serif;
+     background-color: #f8f9fa;
+     color: #333;
+ }
+ 
+ .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+     padding-left: 225px;
+     top: 56px;
+ }
+ 
+ .sb-nav-fixed .sb-topnav {
+     z-index: 1039;
+ }
+ 
+ .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
+     width: 225px;
+     height: 100vh;
+     z-index: 1038;
+ }
+ 
+ .sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav {
+     padding-top: 56px;
+ }
+ 
+ .sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav .sb-sidenav-menu {
+     overflow-y: auto;
+ }
+ 
+ .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+     padding-left: 225px;
+     top: 56px;
+ }
+ 
+ #layoutSidenav {
+     display: flex;
+ }
+ 
+ #layoutSidenav #layoutSidenav_nav {
+     flex-basis: 225px;
+     flex-shrink: 0;
+     transition: transform 0.15s ease-in-out;
+     z-index: 1038;
+     transform: translateX(0);
+ }
+ 
+ #layoutSidenav #layoutSidenav_content {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     min-width: 0;
+     flex-grow: 1;
+     min-height: calc(100vh - 56px);
+     margin-left: -225px;
+ }
+ 
+ /* Sidebar Toggled */
+ .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+     transform: translateX(-225px);
+ }
+ 
+ .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content::before {
+     content: "";
+     display: block;
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: #000;
+     z-index: 1037;
+     opacity: 0.5;
+     transition: opacity 0.3s ease-in-out;
+ }
+ 
+ @media (min-width: 992px) {
+     #layoutSidenav #layoutSidenav_nav {
+         transform: translateX(0);
+     }
+     #layoutSidenav #layoutSidenav_content {
+         margin-left: 0;
+         transition: margin 0.15s ease-in-out;
+     }
+     .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+         transform: translateX(-225px);
+     }
+     .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
+         margin-left: -225px;
+     }
+     .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content::before {
+         display: none;
+     }
+ }
+ 
+ /* Sidebar Styles */
+ .sb-sidenav {
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+     flex-wrap: nowrap;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu {
+     flex-grow: 1;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav {
+     flex-direction: column;
+     flex-wrap: nowrap;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .sb-sidenav-menu-heading {
+     padding: 1.75rem 1rem 0.75rem;
+     font-size: 0.75rem;
+     font-weight: bold;
+     text-transform: uppercase;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .nav-link {
+     display: flex;
+     align-items: center;
+     padding-top: 0.75rem;
+     padding-bottom: 0.75rem;
+     position: relative;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
+     font-size: 0.9rem;
+     margin-right: 0.5rem;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-sidenav-collapse-arrow {
+     display: inline-block;
+     margin-left: auto;
+     transition: transform 0.15s ease;
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .nav-link.collapsed .sb-sidenav-collapse-arrow {
+     transform: rotate(0deg);
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .nav-link:not(.collapsed) .sb-sidenav-collapse-arrow {
+     transform: rotate(-90deg);
+ }
+ 
+ .sb-sidenav .sb-sidenav-menu .nav .sb-sidenav-menu-nested {
+     margin-left: 1.5rem;
+     flex-direction: column;
+ }
+ 
+ .sb-sidenav .sb-sidenav-footer {
+     padding: 0.75rem;
+ }
+ 
+ /* Sidebar for Admin, Siswa, and Pembina */
+ .admin-sidebar .sb-sidenav-menu .nav-link.active {
+     color: white;
+     font-weight: 600;
+     background-color: rgba(102, 16, 242, 0.25);
+ }
+ 
+ .siswa-sidebar .sb-sidenav-menu .nav-link.active {
+     color: white;
+     font-weight: 600;
+     background-color: rgba(0, 123, 255, 0.25);
+ }
+ 
+ .pembina-sidebar .sb-sidenav-menu .nav-link.active {
+     color: white;
+     font-weight: 600;
+     background-color: rgba(25, 135, 84, 0.25);
+ }
+ 
+ /* Card Styles */
+ .card {
+     box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+     border: 0;
+     margin-bottom: 1.5rem;
+ }
+ 
+ .card-header {
+     font-weight: 500;
+     background-color: #f8f9fa;
+     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+ }
+ 
+ .card-footer {
+     background-color: #f8f9fa;
+     border-top: 1px solid rgba(33, 40, 50, 0.125);
+ }
+ 
+ /* Dashboard Stats Card */
+ .stat-card {
+     transition: transform 0.3s;
+ }
+ 
+ .stat-card:hover {
+     transform: translateY(-5px);
+ }
+ 
+ .info-icon {
+     font-size: 2rem;
+     width: 60px;
+     height: 60px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 15px;
+ }
+ 
+ /* Table Styles */
+ .table-hover tbody tr:hover {
+     background-color: rgba(0, 123, 255, 0.05);
+ }
+ 
+ .admin-table tbody tr:hover {
+     background-color: rgba(102, 16, 242, 0.05);
+ }
+ 
+ .siswa-table tbody tr:hover {
+     background-color: rgba(0, 123, 255, 0.05);
+ }
+ 
+ .pembina-table tbody tr:hover {
+     background-color: rgba(25, 135, 84, 0.05);
+ }
+ 
+ /* Form Controls */
+ .form-floating > .form-control:focus ~ label,
+ .form-floating > .form-control:not(:placeholder-shown) ~ label,
+ .form-floating > .form-select ~ label {
+     opacity: 0.65;
+     transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+ }
+ 
+ .form-floating > label {
+     position: absolute;
+     top: 0;
+     left: 0;
+     height: 100%;
+     padding: 1rem 0.75rem;
+     pointer-events: none;
+     border: 1px solid transparent;
+     transform-origin: 0 0;
+     transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+ }
+ 
+ /* Chart Container */
+ .chart-container {
+     position: relative;
+     height: 300px;
+ }
+ 
+ /* Activity List */
+ .activity-list-item {
+     padding: 15px;
+     border-left: 3px solid transparent;
+     margin-bottom: 8px;
+ }
+ 
+ .activity-list-item:hover {
+     background-color: #f8f9fa;
+     border-left-color: #007bff;
+ }
+ 
+ .admin-activity-item:hover {
+     border-left-color: #6610f2;
+ }
+ 
+ .siswa-activity-item:hover {
+     border-left-color: #007bff;
+ }
+ 
+ .pembina-activity-item:hover {
+     border-left-color: #198754;
+ }
+ 
+ .activity-time {
+     font-size: 0.8rem;
+     color: #6c757d;
+ }
+ 
+ .activity-title {
+     font-weight: 600;
+     margin-bottom: 5px;
+ }
+ 
+ .activity-desc {
+     font-size: 0.9rem;
+     color: #6c757d;
+ }
+ 
+ /* Authentication Pages */
+ .auth-container {
+     min-height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     background: linear-gradient(rgba(0, 123, 255, 0.7), rgba(0, 123, 255, 0.7)), url('/img/school-bg.jpg');
+     background-size: cover;
+     background-position: center;
+     padding: 20px;
+ }
+ 
+ .auth-card {
+     width: 100%;
+     max-width: 400px;
+     background-color: white;
+     border-radius: 10px;
+     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+     padding: 2rem;
+ }
+ 
+ .auth-logo {
+     text-align: center;
+     margin-bottom: 2rem;
+ }
+ 
+ .auth-logo i {
+     font-size: 3rem;
+     color: #007bff;
+ }
+ 
+ .divider {
+     display: flex;
+     align-items: center;
+     margin: 30px 0;
+     color: #6c757d;
+ }
+ 
+ .divider::before, .divider::after {
+     content: "";
+     flex: 1;
+     border-bottom: 1px solid #dee2e6;
+ }
+ 
+ .divider::before {
+     margin-right: 10px;
+ }
+ 
+ .divider::after {
+     margin-left: 10px;
+ }
+ 
+ /* Survey Form */
+ .survey-card {
+     margin-bottom: 30px;
+     border-radius: 10px;
+     overflow: hidden;
+     box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+ }
+ 
+ .survey-header {
+     background-color: #007bff;
+     color: white;
+     padding: 15px;
+     border-radius: 10px 10px 0 0;
+ }
+ 
+ .survey-body {
+     padding: 20px;
+ }
+ 
+ .range-labels {
+     display: flex;
+     justify-content: space-between;
+     margin-top: 5px;
+     font-size: 0.85rem;
+     color: #6c757d;
+ }
+ 
+ .score-display {
+     text-align: center;
+     font-size: 1.5rem;
+     font-weight: bold;
+     color: #007bff;
+     margin-top: 10px;
+     padding: 5px;
+     border-radius: 5px;
+     background-color: rgba(0, 123, 255, 0.1);
+ }
+ 
+ /* Recommendation Cards */
+ .recommendation-card {
+     transition: transform 0.3s, box-shadow 0.3s;
+     margin-bottom: 30px;
+     height: 100%;
+ }
+ 
+ .recommendation-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+ }
+ 
+ .recommendation-card .card-header {
+     background-color: #f8f9fa;
+     font-weight: 600;
+ }
+ 
+ .score-circle {
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     background-color: #007bff;
+     color: white;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 1.25rem;
+     font-weight: bold;
+     margin: 0 auto 15px auto;
+ }
+ 
+ .enrolled-badge {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     z-index: 10;
+ }
+ 
+ /* Responsive Adjustments */
+ @media (max-width: 768px) {
+     .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+         padding-left: 0;
+     }
+     .stat-card {
+         margin-bottom: 1rem;
+     }
+     .recommendation-card {
+         margin-bottom: 1.5rem;
+     }
+ }
+ 
+ /* Utility Classes */
+ .cursor-pointer {
+     cursor: pointer;
+ }
+ 
+ .bg-light-primary {
+     background-color: rgba(0, 123, 255, 0.1);
+ }
+ 
+ .bg-light-success {
+     background-color: rgba(25, 135, 84, 0.1);
+ }
+ 
+ .bg-light-warning {
+     background-color: rgba(255, 193, 7, 0.1);
+ }
+ 
+ .bg-light-danger {
+     background-color: rgba(220, 53, 69, 0.1);
+ }
+ 
+ .text-purple {
+     color: #6f42c1;
+ }
+ 
+ .bg-purple {
+     background-color: #6f42c1;
+ }
+ 
+ /* Attendance Status Colors */
+ .status-hadir {
+     color: #198754;
+ }
+ 
+ .status-izin {
+     color: #0d6efd;
+ }
+ 
+ .status-sakit {
+     color: #ffc107;
+ }
+ 
+ .status-alpha {
+     color: #dc3545;
+ }
+ 
+ .bg-status-hadir {
+     background-color: #198754;
+ }
+ 
+ .bg-status-izin {
+     background-color: #0d6efd;
+ }
+ 
+ .bg-status-sakit {
+     background-color: #ffc107;
+ }
+ 
+ .bg-status-alpha {
+     background-color: #dc3545;
+ }
