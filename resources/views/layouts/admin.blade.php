@@ -1,275 +1,259 @@
+<!-- File: resources/views/layouts/admin.blade.php -->
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>@yield('title') - Admin Sistem Ekstrakurikuler</title>
 
     <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet">
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/purpleadmin/vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/purpleadmin/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/purpleadmin/css/style.css') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/purpleadmin/images/favicon.ico') }}" />
 
     <style>
-        .sidebar {
-            background-color: #212529;
-        }
-
-        .sidebar-brand {
-            background-color: #6610f2;
-        }
-
-        .sidebar-brand-text {
-            font-size: 1.2rem;
-        }
-
-        .nav-link {
-            color: rgba(255, 255, 255, 0.75);
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        .nav-link:hover {
-            color: rgba(255, 255, 255, 1);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-link.active {
-            color: white;
-            font-weight: 600;
-            background-color: rgba(102, 16, 242, 0.25);
-        }
-
-        .sidebar-heading {
-            padding: 0.75rem 1rem;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .topbar {
-            height: 4.375rem;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
-        }
-
-        .topbar .dropdown-menu {
-            min-width: 12rem;
-        }
-
-        .dropdown-user .dropdown-menu {
-            min-width: 15rem;
-        }
-
-        .dropdown-menu .dropdown-header {
-            font-size: 0.85rem;
-            padding: 0.5rem 1rem;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #e3e6f0;
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .card {
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
-            border: 0;
-        }
-
-        .card-header {
-            font-weight: 500;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        .required-label::after {
+            content: " *";
+            color: #dc3545;
         }
     </style>
 
     @stack('styles')
 </head>
 
-<body class="sb-nav-fixed">
-    <!-- Top Navigation -->
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand -->
-        <a class="navbar-brand ps-3" href="{{ route('admin.dashboard') }}">
-            <i class="fas fa-school me-2"></i>
-            EKSTRAKURIKULER
-        </a>
-
-        <!-- Sidebar Toggle -->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <!-- Navbar Search -->
-        <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Cari..." aria-label="Search">
-                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-            </div>
-        </div>
-
+<body>
+    <div class="container-scroller">
         <!-- Navbar -->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user-circle fa-fw"></i> {{ Auth::user()->name }}
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="{{ route('admin.dashboard') }}">
+                    <span class="font-weight-bold">MA MODERN</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog fa-fw me-2"></i> Profil</a>
-                    </li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog fa-fw me-2"></i> Pengaturan</a>
-                    </li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-list fa-fw me-2"></i> Log Aktivitas</a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="fas fa-sign-out-alt fa-fw me-2"></i> Logout
+                <a class="navbar-brand brand-logo-mini" href="{{ route('admin.dashboard') }}">
+                    <span class="font-weight-bold">MM</span>
+                </a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+                <div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input type="text" class="form-control bg-transparent border-0" placeholder="Cari...">
+                        </div>
+                    </form>
+                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+                                <img src="{{ asset('assets/purpleadmin/images/faces/face1.jpg') }}" alt="profile">
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">{{ Auth::user()->name }}</p>
+                            </div>
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="mdi mdi-account me-2 text-primary"></i> Profil
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="mdi mdi-settings me-2 text-primary"></i> Pengaturan
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item" href="#"
+                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                    <i class="mdi mdi-logout me-2 text-primary"></i> Logout
+                                </a>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block full-screen-link">
+                        <a class="nav-link">
+                            <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                            data-bs-toggle="dropdown">
+                            <i class="mdi mdi-bell-outline"></i>
+                            <span class="count-symbol bg-danger"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <h6 class="p-3 mb-0">Notifikasi</h6>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="mdi mdi-calendar"></i>
+                                    </div>
+                                </div>
+                                <div
+                                    class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject font-weight-normal mb-1">Acara Hari Ini</h6>
+                                    <p class="text-gray ellipsis mb-0">Rapat koordinasi 10:00 WIB</p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <h6 class="p-3 mb-0 text-center">Lihat Semua Notifikasi</h6>
+                        </div>
                     </li>
                 </ul>
-            </li>
-        </ul>
-    </nav>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
 
-    <div id="layoutSidenav">
-        <!-- Sidebar Navigation -->
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Utama</div>
-                        <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                            href="{{ route('admin.dashboard') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+        <div class="container-fluid page-body-wrapper">
+            <!-- Sidebar -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <a href="#" class="nav-link">
+                            <div class="nav-profile-image">
+                                <img src="{{ asset('assets/purpleadmin/images/faces/face1.jpg') }}" alt="profile">
+                                <span class="login-status online"></span>
+                            </div>
+                            <div class="nav-profile-text d-flex flex-column">
+                                <span class="font-weight-bold mb-2">{{ Auth::user()->name }}</span>
+                                <span class="text-secondary text-small">Administrator</span>
+                            </div>
+                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
+                    </li>
 
-                        <div class="sb-sidenav-menu-heading">Pengelolaan</div>
-                        <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
-                            href="{{ route('admin.users.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Pengguna
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                            <span class="menu-title">Dashboard</span>
+                            <i class="mdi mdi-home menu-icon"></i>
                         </a>
-                        <a class="nav-link collapsed {{ request()->routeIs('admin.extracurriculars.*') ? 'active' : '' }}"
-                            href="#" data-bs-toggle="collapse" data-bs-target="#collapseExtracurricular"
-                            aria-expanded="{{ request()->routeIs('admin.extracurriculars.*') ? 'true' : 'false' }}"
-                            aria-controls="collapseExtracurricular">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users-class"></i></div>
-                            Ekstrakurikuler
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.users.index') }}">
+                            <span class="menu-title">Pengguna</span>
+                            <i class="mdi mdi-account-multiple menu-icon"></i>
                         </a>
-                        <div class="collapse {{ request()->routeIs('admin.extracurriculars.*') ? 'show' : '' }}"
-                            id="collapseExtracurricular" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link {{ request()->routeIs('admin.extracurriculars.index') ? 'active' : '' }}"
-                                    href="{{ route('admin.extracurriculars.index') }}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
-                                    Daftar Ekstrakurikuler
-                                </a>
-                                <a class="nav-link {{ request()->routeIs('admin.extracurriculars.create') ? 'active' : '' }}"
-                                    href="{{ route('admin.extracurriculars.create') }}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-plus"></i></div>
-                                    Tambah Ekstrakurikuler
-                                </a>
-                            </nav>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#ekskul-menu" aria-expanded="false"
+                            aria-controls="ekskul-menu">
+                            <span class="menu-title">Ekstrakurikuler</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-school menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="ekskul-menu">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.extracurriculars.index') }}">Daftar
+                                        Ekstrakurikuler</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.extracurriculars.create') }}">Tambah
+                                        Ekstrakurikuler</a>
+                                </li>
+                            </ul>
                         </div>
+                    </li>
 
-                        <div class="sb-sidenav-menu-heading">Konfigurasi</div>
-                        <a class="nav-link {{ request()->routeIs('admin.parameters.*') ? 'active' : '' }}"
-                            href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-sliders-h"></i></div>
-                            Parameter Rekomendasi
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="menu-title">Parameter Rekomendasi</span>
+                            <i class="mdi mdi-tune menu-icon"></i>
                         </a>
+                    </li>
 
-                        <div class="sb-sidenav-menu-heading">Laporan</div>
-                        <a class="nav-link {{ request()->routeIs('admin.reports.enrollments') ? 'active' : '' }}"
-                            href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user-check"></i></div>
-                            Pendaftaran
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#laporan-menu" aria-expanded="false"
+                            aria-controls="laporan-menu">
+                            <span class="menu-title">Laporan</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-chart-bar menu-icon"></i>
                         </a>
-                        <a class="nav-link {{ request()->routeIs('admin.reports.attendance') ? 'active' : '' }}"
-                            href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-clipboard-check"></i></div>
-                            Kehadiran
-                        </a>
-                        <a class="nav-link {{ request()->routeIs('admin.reports.achievements') ? 'active' : '' }}"
-                            href="">
-                            <div class="sb-nav-link-icon"><i class="fas fa-trophy"></i></div>
-                            Prestasi
-                        </a>
-                    </div>
-                </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Login sebagai:</div>
-                    {{ Auth::user()->name }}
-                </div>
+                        <div class="collapse" id="laporan-menu">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Pendaftaran</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Kehadiran</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Prestasi</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
             </nav>
-        </div>
 
-        <!-- Page Content -->
-        <div id="layoutSidenav_content">
-            <main>
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show mx-4 mt-4" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show mx-4 mt-4" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if (session('warning'))
-                    <div class="alert alert-warning alert-dismissible fade show mx-4 mt-4" role="alert">
-                        {{ session('warning') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @yield('content')
-            </main>
-
-            <!-- Footer -->
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Hak Cipta &copy; Sistem Ekstrakurikuler MA Modern Miftahussa'adah
-                            {{ date('Y') }}</div>
-                        <div>
-                            <a href="#">Kebijakan Privasi</a>
-                            &middot;
-                            <a href="#">Syarat &amp; Ketentuan</a>
+            <!-- Main Content -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
                         </div>
-                    </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if (session('warning'))
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ session('warning') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @yield('content')
                 </div>
-            </footer>
+
+                <!-- Footer -->
+                <footer class="footer">
+                    <div class="container-fluid d-flex justify-content-between">
+                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">
+                            Hak Cipta &copy; Sistem Ekstrakurikuler MA Modern Miftahussa'adah {{ date('Y') }}
+                        </span>
+                        <span class="float-none float-sm-end mt-1 mt-sm-0 text-end">
+                            <a href="#">Kebijakan Privasi</a> &middot; <a href="#">Syarat &amp;
+                                Ketentuan</a>
+                        </span>
+                    </div>
+                </footer>
+            </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
-    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/js/off-canvas.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/js/misc.js') }}"></script>
 
     @stack('scripts')
 </body>

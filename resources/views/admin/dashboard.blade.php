@@ -4,23 +4,17 @@
 
 @push('styles')
     <style>
-        .stat-card {
+        .card {
             transition: transform 0.3s;
         }
 
-        .stat-card:hover {
+        .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .info-icon {
-            font-size: 2rem;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
+        .gradient-card {
+            border: none;
         }
 
         .chart-container {
@@ -28,15 +22,16 @@
             height: 300px;
         }
 
-        .activity-list-item {
+        .activity-item {
             padding: 15px;
             border-left: 3px solid transparent;
             margin-bottom: 8px;
+            transition: all 0.3s;
         }
 
-        .activity-list-item:hover {
-            background-color: #f8f9fa;
-            border-left-color: #6610f2;
+        .activity-item:hover {
+            background-color: rgba(103, 58, 183, 0.05);
+            border-left-color: #7b5cfa;
         }
 
         .activity-time {
@@ -55,273 +50,267 @@
         }
 
         .table-hover tbody tr:hover {
-            background-color: rgba(102, 16, 242, 0.05);
+            background-color: rgba(103, 58, 183, 0.05);
         }
     </style>
 @endpush
 
 @section('content')
-    <div class="container-fluid px-4">
-        <h1 class="mt-4">Dashboard</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+                <i class="mdi mdi-home"></i>
+            </span> Dashboard
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
-        <!-- Welcome Alert -->
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Selamat Datang, {{ Auth::user()->name }}!</h4>
-            <p>Selamat datang di panel admin sistem pengelolaan dan rekomendasi kegiatan ekstrakurikuler MA Modern
-                Miftahussa'adah Cimahi. Gunakan panel ini untuk mengatur pengguna, ekstrakurikuler, dan parameter
-                rekomendasi.</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <!-- Welcome Alert -->
+    <div class="alert alert-gradient-primary alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading text-white">Selamat Datang, {{ Auth::user()->name }}!</h4>
+        <p class="text-white mb-0">Selamat datang di panel admin sistem pengelolaan dan rekomendasi kegiatan ekstrakurikuler
+            MA Modern
+            Miftahussa'adah Cimahi. Gunakan panel ini untuk mengatur pengguna, ekstrakurikuler, dan parameter
+            rekomendasi.</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
-        <!-- Stats Cards -->
-        <div class="row">
-            <div class="col-xl-3 col-md-6">
-                <div class="card stat-card bg-primary text-white mb-4">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="info-icon bg-white text-primary">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">{{ $totalStudents }}</h5>
-                                <div class="small">Total Siswa</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link"
-                            href="{{ route('admin.users.index', ['role' => 'siswa']) }}">Lihat Detail</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card stat-card bg-success text-white mb-4">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="info-icon bg-white text-success">
-                                <i class="fas fa-users-class"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">{{ $totalExtracurriculars }}</h5>
-                                <div class="small">Ekstrakurikuler</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('admin.extracurriculars.index') }}">Lihat
-                            Detail</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card stat-card bg-warning text-white mb-4">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="info-icon bg-white text-warning">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">{{ $totalEnrollments }}</h5>
-                                <div class="small">Pendaftaran</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('admin.reports.enrollments') }}">Lihat
-                            Detail</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card stat-card bg-danger text-white mb-4">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="info-icon bg-white text-danger">
-                                <i class="fas fa-trophy"></i>
-                            </div>
-                            <div>
-                                <h5 class="mb-0">{{ $activeExtracurriculars }}</h5>
-                                <div class="small">Ekstrakurikuler Aktif</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link"
-                            href="{{ route('admin.extracurriculars.index', ['status' => 'active']) }}">Lihat Detail</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
+    <!-- Stats Cards -->
+    <div class="row">
+        <div class="col-md-3 stretch-card grid-margin">
+            <div class="card bg-gradient-primary card-img-holder text-white">
+                <div class="card-body">
+                    <img src="{{ asset('assets/purpleadmin/images/dashboard/circle.svg') }}" class="card-img-absolute"
+                        alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Siswa <i
+                            class="mdi mdi-account-multiple mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ $totalStudents }}</h2>
+                    <h6 class="card-text">
+                        <a href="{{ route('admin.users.index', ['role' => 'siswa']) }}" class="text-white">
+                            Lihat Detail <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </h6>
                 </div>
             </div>
         </div>
+        <div class="col-md-3 stretch-card grid-margin">
+            <div class="card bg-gradient-success card-img-holder text-white">
+                <div class="card-body">
+                    <img src="{{ asset('assets/purpleadmin/images/dashboard/circle.svg') }}" class="card-img-absolute"
+                        alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Ekstrakurikuler <i class="mdi mdi-teach mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ $totalExtracurriculars }}</h2>
+                    <h6 class="card-text">
+                        <a href="{{ route('admin.extracurriculars.index') }}" class="text-white">
+                            Lihat Detail <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 stretch-card grid-margin">
+            <div class="card bg-gradient-warning card-img-holder text-white">
+                <div class="card-body">
+                    <img src="{{ asset('assets/purpleadmin/images/dashboard/circle.svg') }}" class="card-img-absolute"
+                        alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Pendaftaran <i class="mdi mdi-account-check mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ $totalEnrollments }}</h2>
+                    <h6 class="card-text">
+                        <a href="{{ route('admin.reports.enrollments') }}" class="text-white">
+                            Lihat Detail <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 stretch-card grid-margin">
+            <div class="card bg-gradient-danger card-img-holder text-white">
+                <div class="card-body">
+                    <img src="{{ asset('assets/purpleadmin/images/dashboard/circle.svg') }}" class="card-img-absolute"
+                        alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Ekstrakurikuler Aktif <i
+                            class="mdi mdi-school mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ $activeExtracurriculars }}</h2>
+                    <h6 class="card-text">
+                        <a href="{{ route('admin.extracurriculars.index', ['status' => 'active']) }}" class="text-white">
+                            Lihat Detail <i class="mdi mdi-chevron-right"></i>
+                        </a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <div class="row">
-            <!-- Ekstrakurikuler Chart -->
-            <div class="col-xl-8">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar me-1"></i>
+    <div class="row">
+        <!-- Ekstrakurikuler Chart -->
+        <div class="col-lg-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-chart-bar me-1"></i>
                         Distribusi Pendaftaran Ekstrakurikuler
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="enrollmentChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Upcoming Meetings -->
-            <div class="col-xl-4">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-calendar-alt me-1"></i>
-                        Pertemuan Mendatang
-                    </div>
-                    <div class="card-body">
-                        @if ($upcomingMeetings > 0)
-                            <ul class="list-unstyled mb-0">
-                                @foreach ($upcomingMeetings as $meeting)
-                                    <li class="activity-list-item">
-                                        <div class="activity-time">
-                                            <i class="fas fa-clock me-1"></i> {{ $meeting->date->format('d M Y, H:i') }}
-                                        </div>
-                                        <div class="activity-title">{{ $meeting->title }}</div>
-                                        <div class="activity-desc">
-                                            <span class="badge bg-primary">{{ $meeting->extracurricular->name }}</span>
-                                            <span class="ms-2"><i class="fas fa-map-marker-alt me-1"></i>
-                                                {{ $meeting->extracurricular->location ?? 'Lokasi tidak ditentukan' }}</span>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <div class="text-center py-4">
-                                <img src="/img/empty-calendar.svg" alt="Tidak ada pertemuan" class="img-fluid mb-3"
-                                    style="max-height: 150px;">
-                                <h5>Tidak Ada Pertemuan</h5>
-                                <p class="text-muted">Belum ada pertemuan yang dijadwalkan dalam waktu dekat.</p>
-                            </div>
-                        @endif
+                    </h4>
+                    <div class="chart-container">
+                        <canvas id="enrollmentChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <!-- Recent Achievements -->
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-trophy me-1"></i>
-                        Prestasi Terbaru
-                    </div>
-                    <div class="card-body">
-                        @if ($recentAchievements->count() > 0)
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Siswa</th>
-                                            <th>Ekstrakurikuler</th>
-                                            <th>Prestasi</th>
-                                            <th>Tanggal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($recentAchievements as $achievement)
-                                            <tr>
-                                                <td>{{ $achievement->student->user->name }}</td>
-                                                <td>{{ $achievement->extracurricular->name }}</td>
-                                                <td>
-                                                    <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                                        {{ $achievement->title }}
-                                                    </span>
-                                                </td>
-                                                <td>{{ $achievement->date->format('d/m/Y') }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="text-center py-4">
-                                <img src="/img/empty-trophy.svg" alt="Tidak ada prestasi" class="img-fluid mb-3"
-                                    style="max-height: 150px;">
-                                <h5>Belum Ada Prestasi</h5>
-                                <p class="text-muted">Belum ada prestasi yang tercatat dalam sistem.</p>
-                            </div>
-                        @endif
-                    </div>
+        <!-- Upcoming Meetings -->
+        <div class="col-lg-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-calendar me-1"></i>
+                        Pertemuan Mendatang
+                    </h4>
+                    @if ($upcomingMeetings > 0)
+                        <div class="mt-3">
+                            @foreach ($upcomingMeetings as $meeting)
+                                <div class="activity-item">
+                                    <div class="activity-time">
+                                        <i class="mdi mdi-clock-outline me-1"></i>
+                                        {{ $meeting->date->format('d M Y, H:i') }}
+                                    </div>
+                                    <div class="activity-title">{{ $meeting->title }}</div>
+                                    <div class="activity-desc">
+                                        <span
+                                            class="badge badge-gradient-primary">{{ $meeting->extracurricular->name }}</span>
+                                        <span class="ms-2"><i class="mdi mdi-map-marker me-1"></i>
+                                            {{ $meeting->extracurricular->location ?? 'Lokasi tidak ditentukan' }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <i class="mdi mdi-calendar-remove text-muted" style="font-size: 3rem;"></i>
+                            <h5 class="mt-3">Tidak Ada Pertemuan</h5>
+                            <p class="text-muted">Belum ada pertemuan yang dijadwalkan dalam waktu dekat.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Top Extracurriculars -->
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-star me-1"></i>
-                        Ekstrakurikuler Terpopuler
-                    </div>
-                    <div class="card-body">
-                        @if ($extracurricularEnrollments->count() > 0)
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
+    <div class="row">
+        <!-- Recent Achievements -->
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-trophy me-1"></i>
+                        Prestasi Terbaru
+                    </h4>
+                    @if ($recentAchievements->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Siswa</th>
+                                        <th>Ekstrakurikuler</th>
+                                        <th>Prestasi</th>
+                                        <th>Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($recentAchievements as $achievement)
                                         <tr>
-                                            <th>Ekstrakurikuler</th>
-                                            <th>Pembina</th>
-                                            <th>Pendaftar</th>
-                                            <th>Kapasitas</th>
+                                            <td>{{ $achievement->student->user->name }}</td>
+                                            <td>{{ $achievement->extracurricular->name }}</td>
+                                            <td>
+                                                <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                                    {{ $achievement->title }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $achievement->date->format('d/m/Y') }}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($extracurricularEnrollments as $extracurricular)
-                                            <tr>
-                                                <td>{{ $extracurricular->name }}</td>
-                                                <td>{{ $extracurricular->coach->user->name }}</td>
-                                                <td>{{ $extracurricular->enrollments_count }}</td>
-                                                <td>
-                                                    <div class="progress" style="height: 6px;">
-                                                        @php
-                                                            $percentage =
-                                                                ($extracurricular->enrollments_count /
-                                                                    $extracurricular->capacity) *
-                                                                100;
-                                                            $progressClass =
-                                                                $percentage >= 90
-                                                                    ? 'bg-danger'
-                                                                    : ($percentage >= 70
-                                                                        ? 'bg-warning'
-                                                                        : 'bg-success');
-                                                        @endphp
-                                                        <div class="progress-bar {{ $progressClass }}" role="progressbar"
-                                                            style="width: {{ $percentage }}%"
-                                                            aria-valuenow="{{ $percentage }}" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <small
-                                                        class="text-muted">{{ $extracurricular->enrollments_count }}/{{ $extracurricular->capacity }}</small>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="text-center py-4">
-                                <img src="/img/empty-data.svg" alt="Tidak ada data" class="img-fluid mb-3"
-                                    style="max-height: 150px;">
-                                <h5>Belum Ada Data</h5>
-                                <p class="text-muted">Belum ada pendaftaran ekstrakurikuler yang tercatat.</p>
-                            </div>
-                        @endif
-                    </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <i class="mdi mdi-trophy-variant text-muted" style="font-size: 3rem;"></i>
+                            <h5 class="mt-3">Belum Ada Prestasi</h5>
+                            <p class="text-muted">Belum ada prestasi yang tercatat dalam sistem.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Extracurriculars -->
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-star me-1"></i>
+                        Ekstrakurikuler Terpopuler
+                    </h4>
+                    @if ($extracurricularEnrollments->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ekstrakurikuler</th>
+                                        <th>Pembina</th>
+                                        <th>Pendaftar</th>
+                                        <th>Kapasitas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($extracurricularEnrollments as $extracurricular)
+                                        <tr>
+                                            <td>{{ $extracurricular->name }}</td>
+                                            <td>{{ $extracurricular->coach->user->name }}</td>
+                                            <td>{{ $extracurricular->enrollments_count }}</td>
+                                            <td>
+                                                @php
+                                                    $percentage =
+                                                        ($extracurricular->enrollments_count /
+                                                            $extracurricular->capacity) *
+                                                        100;
+                                                    $progressClass =
+                                                        $percentage >= 90
+                                                            ? 'bg-gradient-danger'
+                                                            : ($percentage >= 70
+                                                                ? 'bg-gradient-warning'
+                                                                : 'bg-gradient-success');
+                                                @endphp
+                                                <div class="progress" style="height: 6px;">
+                                                    <div class="progress-bar {{ $progressClass }}" role="progressbar"
+                                                        style="width: {{ $percentage }}%"
+                                                        aria-valuenow="{{ $percentage }}" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <small
+                                                    class="text-muted">{{ $extracurricular->enrollments_count }}/{{ $extracurricular->capacity }}</small>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <i class="mdi mdi-chart-line-variant text-muted" style="font-size: 3rem;"></i>
+                            <h5 class="mt-3">Belum Ada Data</h5>
+                            <p class="text-muted">Belum ada pendaftaran ekstrakurikuler yang tercatat.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -329,7 +318,7 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('assets/purpleadmin/vendors/chart.js/Chart.min.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Enrollment Chart
@@ -341,8 +330,8 @@
                     datasets: [{
                         label: 'Jumlah Siswa',
                         data: {!! json_encode($extracurricularEnrollments->pluck('enrollments_count')) !!},
-                        backgroundColor: 'rgba(102, 16, 242, 0.7)',
-                        borderColor: 'rgba(102, 16, 242, 1)',
+                        backgroundColor: 'rgba(123, 92, 250, 0.7)',
+                        borderColor: 'rgba(123, 92, 250, 1)',
                         borderWidth: 1
                     }]
                 },

@@ -1,247 +1,138 @@
+<!-- File: resources/views/auth/login.blade.php -->
+
 <!DOCTYPE html>
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Login - Sistem Ekstrakurikuler</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <style>
-        body {
-            background: linear-gradient(rgba(0, 123, 255, 0.7), rgba(0, 123, 255, 0.7)), url('/img/school-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #333;
-            font-family: 'Nunito', sans-serif;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        .login-row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .login-image {
-            flex: 1;
-            background-color: #007bff;
-            color: white;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            min-height: 500px;
-        }
-
-        .login-image::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('/img/students.svg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-        }
-
-        .login-image-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-form {
-            flex: 1;
-            padding: 40px;
-        }
-
-        .login-logo {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .login-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .login-subtitle {
-            font-size: 1rem;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .feature-list {
-            text-align: left;
-            list-style-type: none;
-            padding-left: 0;
-            margin-top: 30px;
-        }
-
-        .feature-list li {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .feature-list li i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .form-floating {
-            margin-bottom: 20px;
-        }
-
-        .btn-login {
-            padding: 10px 0;
-            font-weight: 600;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 30px 0;
-            color: #6c757d;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .divider::before {
-            margin-right: 10px;
-        }
-
-        .divider::after {
-            margin-left: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .login-image {
-                display: none;
-            }
-        }
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/purpleadmin/vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/purpleadmin/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/purpleadmin/css/style.css') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/purpleadmin/images/favicon.ico') }}" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="login-container">
-            <div class="login-row">
-                <div class="login-image">
-                    <div class="login-image-content">
-                        <div class="login-logo">
-                            <i class="fas fa-school"></i>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+                <div class="row flex-grow">
+                    <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                        <div class="auth-form-transparent text-left p-3">
+                            <div class="brand-logo">
+                                <h3 class="text-primary"><i class="mdi mdi-school"></i> MA Modern Miftahussa'adah</h3>
+                            </div>
+                            <h4>Selamat Datang!</h4>
+                            <h6 class="font-weight-light">Login ke Akun Anda</h6>
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            <form class="pt-3" method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend bg-transparent">
+                                            <span class="input-group-text bg-transparent border-right-0">
+                                                <i class="mdi mdi-account-outline text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input type="email"
+                                            class="form-control form-control-lg border-left-0 @error('email') is-invalid @enderror"
+                                            id="email" name="email" placeholder="Email"
+                                            value="{{ old('email') }}" required autofocus>
+                                        @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend bg-transparent">
+                                            <span class="input-group-text bg-transparent border-right-0">
+                                                <i class="mdi mdi-lock-outline text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input type="password"
+                                            class="form-control form-control-lg border-left-0 @error('password') is-invalid @enderror"
+                                            id="password" name="password" placeholder="Password" required>
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="my-2 d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <label class="form-check-label text-muted">
+                                            <input type="checkbox" class="form-check-input" name="remember"
+                                                id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            Ingat Saya
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="my-3">
+                                    <button type="submit"
+                                        class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
+                                        <i class="mdi mdi-login me-2"></i> Login
+                                    </button>
+                                </div>
+
+                                <div class="text-center mt-4 font-weight-light">
+                                    Belum memiliki akun? <a href="{{ route('register') }}" class="text-primary">Daftar
+                                        Sekarang</a>
+                                </div>
+                            </form>
                         </div>
-                        <h2 class="login-title">MA Modern Miftahussa'adah</h2>
-                        <p class="login-subtitle">Sistem Pengelolaan dan Rekomendasi Kegiatan Ekstrakurikuler</p>
-
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check-circle"></i> Pengelolaan kegiatan ekstrakurikuler terintegrasi
-                            </li>
-                            <li><i class="fas fa-check-circle"></i> Rekomendasi ekstrakurikuler sesuai dengan minat dan
-                                bakat</li>
-                            <li><i class="fas fa-check-circle"></i> Pelacakan kehadiran dan prestasi siswa</li>
-                            <li><i class="fas fa-check-circle"></i> Laporan dan analitik kegiatan ekstrakurikuler</li>
-                        </ul>
                     </div>
-                </div>
+                    <div class="col-lg-6 login-half-bg d-flex flex-row"
+                        style="background: linear-gradient(rgba(103, 58, 183, 0.8), rgba(103, 58, 183, 0.8)), url('/img/school-bg.jpg'); background-size: cover;">
+                        <div class="p-5 text-center text-white">
+                            <h2 class="mb-3">Sistem Pengelolaan dan Rekomendasi Kegiatan Ekstrakurikuler</h2>
 
-                <div class="login-form">
-                    <h3 class="mb-4">Login ke Akun Anda</h3>
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                            <ul class="list-unstyled text-start mt-4">
+                                <li class="mb-3"><i class="mdi mdi-check-circle me-2"></i> Pengelolaan kegiatan
+                                    ekstrakurikuler terintegrasi</li>
+                                <li class="mb-3"><i class="mdi mdi-check-circle me-2"></i> Rekomendasi ekstrakurikuler
+                                    sesuai dengan minat dan bakat</li>
+                                <li class="mb-3"><i class="mdi mdi-check-circle me-2"></i> Pelacakan kehadiran dan
+                                    prestasi siswa</li>
+                                <li class="mb-3"><i class="mdi mdi-check-circle me-2"></i> Laporan dan analitik
+                                    kegiatan ekstrakurikuler</li>
                             </ul>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
                         </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-floating">
-                            <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                id="email" name="email" placeholder="name@example.com" value="{{ old('email') }}"
-                                required autofocus>
-                            <label for="email">Email</label>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-floating">
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                id="password" name="password" placeholder="Password" required>
-                            <label for="password">Password</label>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                {{ old('remember') ? 'checked' : '' }}>
-                            <label class="form-check-label" for="remember">
-                                Ingat Saya
-                            </label>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-login">
-                                <i class="fas fa-sign-in-alt me-2"></i> Login
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="divider">
-                        <span>atau</span>
-                    </div>
-
-                    <div class="text-center">
-                        <p class="mb-4">Belum memiliki akun?</p>
-                        <a href="{{ route('register') }}" class="btn btn-outline-primary w-100">
-                            <i class="fas fa-user-plus me-2"></i> Daftar Sekarang
-                        </a>
                     </div>
                 </div>
             </div>
+            <!-- content-wrapper ends -->
         </div>
-
-        <div class="text-center mt-3 text-white">
-            <p>&copy; {{ date('Y') }} MA Modern Miftahussa'adah Cimahi. All rights reserved.</p>
-        </div>
+        <!-- page-body-wrapper ends -->
     </div>
+    <!-- container-scroller -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="{{ asset('assets/purpleadmin/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/js/off-canvas.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('assets/purpleadmin/js/misc.js') }}"></script>
 </body>
 
 </html>
